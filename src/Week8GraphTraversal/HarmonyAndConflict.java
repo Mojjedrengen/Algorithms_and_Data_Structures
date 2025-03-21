@@ -56,6 +56,7 @@ public class HarmonyAndConflict {
 
     while (!queue.isEmpty()) {
       int v = queue.remove();
+      if (G[v] == null) continue;
       for (String w : G[v]) {
         String[] edge = w.split("-");
         int edgeNode = Integer.parseInt(edge[0]);
