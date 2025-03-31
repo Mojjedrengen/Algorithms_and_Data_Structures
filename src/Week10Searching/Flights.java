@@ -49,7 +49,7 @@ public class Flights {
             } else if (inputs[0].equals("count")) {
                 LocalTime fromKey = LocalTime.parse(inputs[1]);
                 LocalTime toKey = LocalTime.parse(inputs[2]);
-                NavigableMap<LocalTime, String> countMap = allFlights.subMap(fromKey, true, toKey, true);
+                NavigableMap<LocalTime, String> countMap = allFlights.subMap(fromKey.minusSeconds(1l), false, toKey.plusSeconds(1l), false);
                 System.out.println(countMap.size());
             }
         }
