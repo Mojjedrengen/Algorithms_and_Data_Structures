@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalTime;
+import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
@@ -42,8 +43,9 @@ public class Flights {
                 else System.out.println(val);
             } else if (inputs[0].equals("next")) {
                 LocalTime key = LocalTime.parse(inputs[1]);
-                LocalTime next = allFlights.ceilingKey(key);
-                System.out.println(next + " " + allFlights.get(next));
+                Map.Entry<LocalTime, String> next = allFlights.ceilingEntry(key);
+                if (next == null) System.out.println("-");
+                else System.out.println(next.getKey() + " " + next.getValue());
             } else if (inputs[0].equals("count")) {
                 LocalTime fromKey = LocalTime.parse(inputs[1]);
                 LocalTime toKey = LocalTime.parse(inputs[2]);
