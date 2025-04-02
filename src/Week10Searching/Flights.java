@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalTime;
+import java.util.Formatter;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
+import java.time.format.DateTimeFormatter; 
 
 public class Flights {
 
@@ -16,6 +20,8 @@ public class Flights {
         int n = Integer.parseInt(nm[0]);
         int m = Integer.parseInt(nm[1]);
         TreeMap<LocalTime, String> allFlights = new TreeMap<>();
+
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         for (int i = 0; i < n; i++) {
             String[] inputs = in.readLine().split(" ");
@@ -45,11 +51,11 @@ public class Flights {
                 LocalTime key = LocalTime.parse(inputs[1]);
                 Map.Entry<LocalTime, String> next = allFlights.ceilingEntry(key);
                 if (next == null) System.out.println("-");
-                else System.out.println(next.getKey() + " " + next.getValue());
+                else System.out.println(next.getKey().format(dft) + " " + next.getValue());
             } else if (inputs[0].equals("count")) {
                 LocalTime fromKey = LocalTime.parse(inputs[1]);
                 LocalTime toKey = LocalTime.parse(inputs[2]);
-                NavigableMap<LocalTime, String> countMap = allFlights.subMap(fromKey.minusSeconds(1l), false, toKey.plusSeconds(1l), false);
+                NavigableMap<LocalTime, String> countMap = allFlights.subMap(fromKey, true, toKey, true);
                 System.out.println(countMap.size());
             }
         }
